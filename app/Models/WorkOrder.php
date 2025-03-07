@@ -2,24 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class WorkOrder extends Model
 {
-    protected $fillable = [
-        'operator_id',
-        'no_wo',
-        'product_name',
-        'date_work_order',
-        'deadline',
-        'qty_order',
-        'qty_pending',
-        'qty_inProgress',
-        'qty_completed',
-        'qty_canceled',
-        'status',
-        'note',
-        'finished_at',
-    ];
+    protected $fillable = ['work_order_number', 'product_name', 'quantity', 'deadline', 'status', 'assigned_operator_id', 'created_by'];
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function assignedOperator()
+    {
+        return $this->belongsTo(User::class, 'assigned_operator_id');
+    }
+
+    public function progress()
+    {
+        return $this->hasMany(WorkOrderProgress::class);
+    }
 }
