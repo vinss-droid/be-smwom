@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProductionManager
+class Operator
 {
     /**
      * Handle an incoming request.
@@ -17,13 +17,13 @@ class ProductionManager
      */
     public function handle(Request $request, Closure $next): Response
     {
-//        user data
+        //        user data
         $userData = User::with('role')->find(Auth::id());
 //        check user role
         $userRole = $userData['role']['name'];
 
 //        validate user role
-        if ($userRole === 'Production Manager') {
+        if ($userRole === 'Operator') {
 //            process to request
             return $next($request);
         } else {

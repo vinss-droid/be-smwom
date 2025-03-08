@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\auth\AuthController;
 use App\Http\Controllers\API\WorkOrderController;
+use App\Http\Controllers\API\WorkOrderProgressController;
 use Illuminate\Support\Facades\Route;
 
 //    Auth Route
@@ -30,6 +31,14 @@ Route::middleware(['auth:sanctum'])
                             ->middleware('production_manager')
                             ->name('work-order.store');
                     });
+            });
+
+//        Work Order Progress Route
+
+        Route::prefix('/progress/work-order')
+            ->middleware(['operator'])
+            ->group(function () {
+                Route::post('/', [WorkOrderProgressController::class, 'store']);
             });
 
     });

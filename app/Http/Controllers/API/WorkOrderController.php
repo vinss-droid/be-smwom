@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
     {
         // Apply 'status' and 'deadline' filters to the WorkOrder query
         $filters = $request->only(['status', 'deadline']);
-        $workOrders = WorkOrder::with(['creator', 'assignedOperator'])->where($filters);
+        $workOrders = WorkOrder::with(['creator', 'assignedOperator', 'progress'])->where($filters);
 
         // If the user is an Operator, show only their assigned work orders
         // Otherwise, show all filtered work orders
@@ -51,9 +51,9 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
      */
     public function store(Request $request)
     {
-        try {
-            DB::beginTransaction();
+        DB::beginTransaction();
 
+        try {
             $validated = Validator::make($request->all(), [
                 'product_name' => 'required|string|max:100',
                 'quantity' => 'required|integer',
@@ -100,9 +100,9 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
      */
     public function update(Request $request, $id)
     {
+    //    Start the transaction
+        DB::beginTransaction();
         try {
-//            Start the transaction
-            DB::beginTransaction();
 
             // Search WorkOrder by ID
             $workOrder = WorkOrder::findOrFail($id);

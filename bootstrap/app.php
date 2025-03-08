@@ -16,7 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\ForceJsonResponse::class,
         ]);
         $middleware->alias([
-            'production_manager' => \App\Http\Middleware\ProductionManager::class
+            'production_manager' => \App\Http\Middleware\ProductionManager::class,
+            'operator' => \App\Http\Middleware\Operator::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
