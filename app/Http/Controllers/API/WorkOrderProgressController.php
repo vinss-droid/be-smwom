@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\WorkOrder;
 use App\Models\WorkOrderProgress;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -87,6 +88,9 @@ class WorkOrderProgressController extends Controller
 
             // Create the new progress record
             WorkOrderProgress::create($validated->validated());
+
+//            Update status to work order
+            WorkOrder::where('id', $workOrderId)->update(['status' => $newStatus]);
 
             DB::commit();
 
