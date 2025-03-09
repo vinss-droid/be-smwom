@@ -72,6 +72,7 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 //          Get validated data
             $data = $validated->validated();
+            $data['deadline'] = date('Y-m-d', strtotime($data['deadline']));
             $data['created_by'] = $this->userId;
             $data['work_order_number'] = WorkOrder::generateWorkOrderNumber();
 
