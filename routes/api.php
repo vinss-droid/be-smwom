@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\auth\AuthController;
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\WorkOrderController;
 use App\Http\Controllers\API\WorkOrderProgressController;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +39,10 @@ Route::middleware(['auth:sanctum'])
         Route::prefix('/progress/work-order')
             ->middleware(['operator'])
             ->group(function () {
-                Route::post('/', [WorkOrderProgressController::class, 'store']);
+                Route::post('/', [WorkOrderProgressController::class, 'store'])->name('work-order.store');
             });
+
+//        operator
+        Route::get('/operators', [USerController::class, 'getOperator'])->name('operators')->middleware(['production_manager']);
 
     });
