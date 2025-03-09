@@ -59,6 +59,16 @@ Start the server
 ```
 
 
+## Default Account
+
+| Email | Password     | Role                |
+| :-------- | :------- | :------------------------- |
+| `pm@smwom.com` | `pm@smwom.com` | Production Manager |
+| `op1@smwom.com` | `op1@smwom.com` | Operator |
+| `op2@smwom.com` | `op2@smwom.com` | Operator |
+
+
+
 ## API Reference
 
 #### Login
