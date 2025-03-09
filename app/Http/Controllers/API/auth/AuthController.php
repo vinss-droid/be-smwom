@@ -33,7 +33,14 @@ class AuthController extends Controller
             }
 
 //        check user account is register in database
-            $user = User::where('email', $request->email)->first();
+            $user = User::where('email', $request->email);
+            $userRole = $user->with('role')->first();
+            $userRole = $userRole['role']['name'];
+            $user = $user->first();
+            $userData = [
+                'name' => $user->name,
+                'role' => $userRole,
+            ];
 
 //        if user doesn't exist
             if (!$user) {
@@ -58,6 +65,7 @@ class AuthController extends Controller
                 'status' => 'success',
                 'message' => 'Login successfully',
                 'token' => $user->createToken(uuid_create(), ['*'], now()->addWeek(3))->plainTextToken,
+                'user' => $userData
             ], ResponseAlias::HTTP_OK);
         } catch (\Exception $exception) {
 //            response if the process is failure
